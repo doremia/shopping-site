@@ -55,7 +55,7 @@ def show_melon(melon_id):
 
 
 @app.route("/cart")
-def show_shopping_cart(common_name):
+def show_shopping_cart():
     """Display content of shopping cart."""
 
     # TODO: Display the contents of the shopping cart.
@@ -98,13 +98,14 @@ def add_to_cart(melon_id):
     # - increment the count for that melon id by 1
     # - flash a success message
     # - redirect the user to the cart page
+    
+    session["cart"] = session.get('cart', {})
+    session['cart'][melon_id] = session['cart'].get(melon_id, 0) + 1
 
-    session["cart"] = melons.get_by_id(melon_id)
+   
+    flash("Melon successfully added!")
 
-
-
-    #return "Oops! This needs to be implemented!"
-    return success
+    return redirect("/cart")
 
 
 @app.route("/login", methods=["GET"])
